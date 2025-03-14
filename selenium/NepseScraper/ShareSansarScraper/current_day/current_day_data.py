@@ -1,11 +1,12 @@
 from ShareSansarScraper.constants import *
 from ShareSansarScraper.common_selenium_operations import Operations
+from ShareSansarScraper.selenium_driver import SeleniumDriver
 
-class CurrentDayData(Operations):
+class CurrentDayData(SeleniumDriver):
     """Scraper for extracting table data from Sharesansar Market page."""
     
-    def __init__(self, url="https://www.sharesansar.com/market", headless=True):
-        super().__init__(url,headless)
+    def __init__(self, url="https://www.sharesansar.com/market", headless=False):
+        super().__init__()
 
     def current_market_indices(self):
         """Extracts current market indices data from sharesansaar"""

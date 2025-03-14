@@ -20,7 +20,7 @@ class Operations:
                     EC.presence_of_element_located((By.XPATH, xpath))
                 )
 
-                # Wait for the headers to be present (optional, if headers take time to load)
+                # Wait for the headers to be present 
                 headers = [th.text.strip() for th in table.find_elements(By.TAG_NAME, "th")]
 
                 # Wait for rows to be present and extract data
@@ -38,10 +38,17 @@ class Operations:
                 return [], []
             
     def locateElement(self, identifier:str, identifier_type, wait_time:int = 60):
-        try:
-            table = WebDriverWait(self.driver, wait_time).until(
-                EC.presence_of_element_located((identifier_type, identifier))
-            )
-        except TimeoutError as err:
-            print(err)
+        with SeleniumDriver(headless=self.headless) as driver:
+            driver.get(self.url) 
+            try:
+                # Wait for the presence of the element to be located
+                element = WebDriverWait(driver, wait_time).until(
+                    EC.presence_of_element_located((identifier_type, identifier))
+                )
+                print("presence of element located...")
+                return element
+            except TimeoutError as err:
+                print(err)
+
+
 
