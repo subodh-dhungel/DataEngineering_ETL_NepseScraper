@@ -1,5 +1,4 @@
 from ShareSansarScraper.constants import *
-from ShareSansarScraper.common_selenium_operations import Operations
 from ShareSansarScraper.selenium_driver import SeleniumDriver
 
 class CurrentDayData(SeleniumDriver):

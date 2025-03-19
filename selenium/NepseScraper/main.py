@@ -1,11 +1,12 @@
-from ShareSansarScraper.current_day.current_day_data import CurrentDayData
-from ShareSansarScraper.datewise.datewise_data import DatewiseData
+from ShareSansarScraper.companies.listed_companies import ListedCompanies
+# from ShareSansarScraper.pandas import PandasOperations
+# from ShareSansarScraper.datewise.datewise_data import DatewiseData
 import pandas as pd
 
 
 def main():
     #scraper = CurrentDayData()
-    daily_market_data = DatewiseData("2025-03-11")
+    # daily_market_data = DatewiseData("2025-03-15")
     
     # Get data for the current market indices
     # indices_headers, indices_data = scraper.current_market_indices()
@@ -31,7 +32,6 @@ def main():
 
     # Get data for the datewise market summary
     # result = daily_market_data.datewise_market_indices()
-    # print("Returned result:", result)  # Debugging
 
     # # Check the type and length
     # if isinstance(result, tuple) and len(result) == 2:
@@ -43,9 +43,10 @@ def main():
     # else:
     #     print("Unexpected return format from datewise_market_indices()")
     
-    #Get the data for the sectorwise marekt summary:
-    
-
+    #Get the data for the sectorwise summary
+    listedCompanies = ListedCompanies()
+    df = listedCompanies.get_companies_by_sector("Hydropower")
+    print(df)
 
 if __name__ == "__main__":
     main()

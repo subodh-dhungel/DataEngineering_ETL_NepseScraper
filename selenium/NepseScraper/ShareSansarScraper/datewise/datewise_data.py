@@ -1,5 +1,4 @@
 from ShareSansarScraper import constants
-from ShareSansarScraper.common_selenium_operations import Operations
 from ShareSansarScraper.constants import *
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
