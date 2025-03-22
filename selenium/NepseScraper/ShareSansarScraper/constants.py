@@ -23,8 +23,9 @@ xpath_datewise_market_summary_table = "/html/body/div[2]/div/section[2]/div[3]/d
 xpath_datewise_sector_summary_table = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/div[4]/div/div/table[2]"
 
 #constant for companies
-xpath_selection_element = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/form/div[1]/span/span[1]/span/span[1]"
+xpath_companies_selection_element = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/form/div[1]/span/span[1]/span/span[1]"
 xpath_companies_input_element = "/html/body/span/span/span[1]/input"
 xpath_companies_search_button = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/form/div[2]/button"
 xpath_companies_data_table = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/div[4]/div/table"
 xpath_next_button = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/div[4]/div/div[5]/a[2]"
+xpath_paginated_span = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/div[4]/div/div[5]/span"
