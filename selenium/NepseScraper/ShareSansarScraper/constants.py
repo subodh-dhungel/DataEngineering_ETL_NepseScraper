@@ -1,7 +1,11 @@
 #urls
+from re import X
+
+
 ss_marketpage_url = "https://www.sharesansar.com/market"
 ss_datewise_market_url = "https://www.sharesansar.com/datewise-indices"
 ss_companypage_url = "https://www.sharesansar.com/company-list"
+ss_historical_data = "https://www.sharesansar.com/indices-sub-indices"
 
 #constant for current day market indices table jasto nepseIndex, float, senfloat, etc.
 xpath_current_day_indices_table = "/html/body/div[2]/div/section[2]/div[3]/div/div[3]/div[1]/div/div[1]/div[2]/table"
@@ -29,3 +33,13 @@ xpath_companies_search_button = "/html/body/div[2]/div/section[2]/div[3]/div/div
 xpath_companies_data_table = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/div[4]/div/table"
 xpath_next_button = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/div[4]/div/div[5]/a[2]"
 xpath_paginated_span = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/div[4]/div/div[5]/span"
+
+#constants for historical charting data.
+xpath_indices_selection_element = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/form/div[1]/span/span[1]/span"
+xpath_indices_search_input_element = "/html/body/span/span/span[1]/input"
+xpath_indices_date_from_input_element = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/form/div[2]/input"
+xpath_indices_date_to_input_element = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/form/div[3]/input"
+xpath_indices_search_button = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/form/div[4]/button"
+xpath_indices_data_table = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/div[4]/div/table"
+xpath_indices_next_button = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/div[4]/div/div[5]/a[2]"
+xpath_indices_paginated_span = "/html/body/div[2]/div/section[2]/div[3]/div/div/div/div/div[1]/div[4]/div/div[5]/span"

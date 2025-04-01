@@ -3,6 +3,8 @@ from ShareSansarScraper.companies.listed_companies import ListedCompanies
 # from ShareSansarScraper.datewise.datewise_data import DatewiseData
 import pandas as pd
 
+from ShareSansarScraper.historicaldata.historical_indices_data import HistoricalIndicesData
+
 
 def main():
     #scraper = CurrentDayData()
@@ -44,9 +46,13 @@ def main():
     #     print("Unexpected return format from datewise_market_indices()")
     
     #Get the data for the sectorwise summary
-    listedCompanies = ListedCompanies()
-    df = listedCompanies.get_companies_by_sector("Hydropower")
-    print(df)
+    # listedCompanies = ListedCompanies()
+    # df = listedCompanies.get_companies_by_sector("Microfinance")
+    # df.to_csv("./companies.csv", index=False)
+    
+    #Get the data for the historical indices summary data
+    indicesHistoricalData = HistoricalIndicesData()
+    df = indicesHistoricalData.get_indices_historical_data("Finance Index", "2021-03-30","2025-03-30")
 
 if __name__ == "__main__":
     main()
