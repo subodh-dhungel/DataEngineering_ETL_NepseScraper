@@ -1,9 +1,12 @@
+from datetime import datetime
 from ShareSansarScraper.companies.listed_companies import ListedCompanies
 # from ShareSansarScraper.pandas import PandasOperations
 # from ShareSansarScraper.datewise.datewise_data import DatewiseData
 import pandas as pd
+from ShareSansarScraper.database_helper import DatabaseHelper
 
 from ShareSansarScraper.historicaldata.historical_indices_data import HistoricalIndicesData
+import ShareSansarScraper.database_helper as database_helper
 
 
 def main():
@@ -39,7 +42,6 @@ def main():
     # if isinstance(result, tuple) and len(result) == 2:
     #     datewise_market_headers, datewise_market_data = result
         
-    #     if datewise_market_data:
     #         market_df = pd.DataFrame(datewise_market_data, columns=datewise_market_headers)
     #         print(market_df)
     # else:
@@ -52,7 +54,13 @@ def main():
     
     #Get the data for the historical indices summary data
     indicesHistoricalData = HistoricalIndicesData()
-    df = indicesHistoricalData.get_indices_historical_data("Finance Index", "2021-03-30","2025-03-30")
-
+    database_helper = DatabaseHelper("scraperdb","scraperadmin","subodh9818")
+    df = indicesHistoricalData.get_indices_historical_data("NEPSE", "2021-03-30","2025-03-30")
+    df.drop('Signal', axis=1, inplace=True)
+    df['scrapedAt'] = datetime.now().date()
+    df.to_csv("./indexHistoricalData.csv", index = False)
+    database_helper.connect()
+    
+    
 if __name__ == "__main__":
     main()
