@@ -20,3 +20,6 @@ logs/
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
+
+#Ignore csv files
+.csv

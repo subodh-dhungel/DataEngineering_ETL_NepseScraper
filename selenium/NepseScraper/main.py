@@ -1,66 +1,16 @@
-from datetime import datetime
-from ShareSansarScraper.companies.listed_companies import ListedCompanies
-# from ShareSansarScraper.pandas import PandasOperations
-# from ShareSansarScraper.datewise.datewise_data import DatewiseData
-import pandas as pd
-from ShareSansarScraper.database_helper import DatabaseHelper
-
-from ShareSansarScraper.historicaldata.historical_indices_data import HistoricalIndicesData
-import ShareSansarScraper.database_helper as database_helper
+from ShareSansarScraper.scraper import Scraper
 
 
 def main():
-    #scraper = CurrentDayData()
-    # daily_market_data = DatewiseData("2025-03-15")
+    scraper = Scraper()
     
-    # Get data for the current market indices
-    # indices_headers, indices_data = scraper.current_market_indices()
-    # if indices_data:
-    #     indices_df = pd.DataFrame(indices_data, columns=indices_headers if indices_headers else None)
-    #     print("Current Market Indices:")
-    #     print(indices_df)
-    #     print("\n" + "="*50 + "\n")
-
-    # Get data for the current market summary
-    # summary_headers, summary_data = scraper.current_market_summary()
-    # if summary_data:
-    #     summary_df = pd.DataFrame(summary_data, columns=summary_headers if summary_headers else None)
-    #     print("Current Market Summary:")
-    #     print(summary_df)
-
-    # Get data for the sectorwise market summary
-    # sector_headers, sector_data = scraper.current_sectorwise_summary()
-    # if sector_data:
-    #     sector_df = pd.DataFrame(sector_data, columns=sector_headers if sector_headers else None)
-    #     print("Current Market sector: ")
-    #     print(sector_df)
-
-    # Get data for the datewise market summary
-    # result = daily_market_data.datewise_market_indices()
-
-    # # Check the type and length
-    # if isinstance(result, tuple) and len(result) == 2:
-    #     datewise_market_headers, datewise_market_data = result
-        
-    #         market_df = pd.DataFrame(datewise_market_data, columns=datewise_market_headers)
-    #         print(market_df)
-    # else:
-    #     print("Unexpected return format from datewise_market_indices()")
+    #load data to database
+    # data_loader = DataLoader()
+    # historical_indices_data = HistoricalIndicesData().get_indices_historical_data("nepse", "2024-04-10", "2025-04-10")
+    # data_loader.load_historical_nepse_data(historical_indices_data)
     
-    #Get the data for the sectorwise summary
-    # listedCompanies = ListedCompanies()
-    # df = listedCompanies.get_companies_by_sector("Microfinance")
-    # df.to_csv("./companies.csv", index=False)
-    
-    #Get the data for the historical indices summary data
-    indicesHistoricalData = HistoricalIndicesData()
-    database_helper = DatabaseHelper("scraperdb","scraperadmin","subodh9818")
-    df = indicesHistoricalData.get_indices_historical_data("NEPSE", "2021-03-30","2025-03-30")
-    df.drop('Signal', axis=1, inplace=True)
-    df['scrapedAt'] = datetime.now().date()
-    df.to_csv("./indexHistoricalData.csv", index = False)
-    database_helper.connect()
-    
+    current_market_indices = scraper.get_datewise_sectorwise_summary("2025-04-10")
+    print(current_market_indices)
     
 if __name__ == "__main__":
     main()
