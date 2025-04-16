@@ -8,79 +8,77 @@ import pandas as pd
 
 class HistoricalIndicesData:
     def __init__(self):
-        self.driver = SeleniumDriver().get_driver()
         self.url = constants.ss_historical_data
-    
-    def __perform_search(self, indices_name, fromDate, toDate):
-        "search for the indices historical data by name"
-        self.driver.get(self.url)
+
+    def __perform_search(self, driver, indices_name, fromDate, toDate):
+        """Search for the indices historical data by name"""
+        driver.get(self.url)
         
-        #select dropdown and search for the indices
-        search_dropdown = WebDriverWait(self.driver, 30).until(
+        # Click dropdown
+        search_dropdown = WebDriverWait(driver, 30).until(
             EC.element_to_be_clickable((By.XPATH, constants.xpath_indices_selection_element))
         )
-        
-        #clicking the dropdown menu.
         search_dropdown.click()
     
-        #search for the indices name.
-        search_input = WebDriverWait(self.driver, 30).until(
+        # Enter indices name
+        search_input = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, constants.xpath_indices_search_input_element))
         )
-        
         search_input.send_keys(indices_name)
         
-        #search for the from date input field.
-        date_from_input = WebDriverWait(self.driver,30).until(
+        # Set date from
+        date_from_input = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, constants.xpath_indices_date_from_input_element))
         )
         date_from_input.clear()
         date_from_input.send_keys(fromDate)
         
-        #search for the to date input field.
-        date_to_input = WebDriverWait(self.driver,30).until(
+        # Set date to
+        date_to_input = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, constants.xpath_indices_date_to_input_element))
         )
         date_to_input.clear()
         date_to_input.send_keys(toDate)
         
-        #search for the search button.
-        search_button = WebDriverWait(self.driver, 30).until(
-            EC.presence_of_element_located((By.XPATH,constants.xpath_indices_search_button))
+        # Click search
+        search_button = WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((By.XPATH, constants.xpath_indices_search_button))
         )
-        
         search_button.click()
-        
-        #wait for the table to be present in the view.
-        WebDriverWait(self.driver,30).until(
+
+        # Wait for data table
+        WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, constants.xpath_indices_data_table))
         )
-        
+
     def get_indices_historical_data(self, indices_name, dateFrom, dateTo):
-            """Scrape all companies from paginated table."""
-            self.__perform_search(indices_name, dateFrom, dateTo)
+        """Scrape all companies from paginated table"""
+        with SeleniumDriver() as selenium_driver:
+            driver = selenium_driver.get_driver()
+
+            self.__perform_search(driver, indices_name, dateFrom, dateTo)
 
             all_data = []
             seen_pages = set()
+            headers = []
 
             while True:
                 try:
-                    # Re-fetch table to avoid stale elements
-                    table = WebDriverWait(self.driver, 20).until(
+                    # Get table
+                    table = WebDriverWait(driver, 20).until(
                         EC.presence_of_element_located((By.XPATH, constants.xpath_indices_data_table))
                     )
                     rows = table.find_elements(By.TAG_NAME, "tr")
 
-                    if not all_data:
+                    if not headers:
                         headers = [th.text.strip() for th in rows[0].find_elements(By.TAG_NAME, "th")]
 
-                    # Extract data for current page
+                    # Get table rows
                     page_data = [
                         [td.text.strip() for td in row.find_elements(By.TAG_NAME, "td")]
                         for row in rows[1:]
                     ]
 
-                    # Prevent duplicate pages
                     page_hash = hash(str(page_data))
                     if page_hash in seen_pages:
                         print("Duplicate page detected, stopping pagination.")
@@ -90,21 +88,20 @@ class HistoricalIndicesData:
                     all_data.extend(page_data)
                     print(f"Page {len(seen_pages)} data appended.")
 
-                    # Re-fetch next button before checking its status
+                    # Click next button
                     try:
-                        next_button = WebDriverWait(self.driver, 5).until(
+                        next_button = WebDriverWait(driver, 5).until(
                             EC.presence_of_element_located((By.XPATH, constants.xpath_indices_next_button))
                         )
                     except TimeoutException:
                         print("Next button not found, exiting loop.")
                         break
 
-                    # Click the next button if it's enabled, otherwise stop
                     if next_button.is_enabled():
                         next_button.click()
 
-                        # Wait for new table data to load
-                        WebDriverWait(self.driver, 20).until(
+                        # Wait for next page to load
+                        WebDriverWait(driver, 20).until(
                             EC.presence_of_element_located((By.XPATH, constants.xpath_indices_data_table))
                         )
                     else:

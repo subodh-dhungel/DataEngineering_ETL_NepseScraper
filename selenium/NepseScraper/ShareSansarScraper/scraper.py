@@ -1,7 +1,9 @@
 import logging
+from ShareSansarScraper.historicaldata.historical_indices_data import HistoricalIndicesData
 from ShareSansarScraper.pandas import PandasOperations
 from ShareSansarScraper.current_day.current_day_data import CurrentDayData
 from ShareSansarScraper.datewise.datewise_data import DatewiseData
+from ShareSansarScraper.historicaldata.historical_charting_data import HistoricalChartData
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -21,7 +23,7 @@ class Scraper:
                 logger.warning("No data found for current market indices.")
                 return None
         except Exception as e:
-            logger.error(f"Error fetching current market indices: {e}")
+            logger.error(f"Error scraping current market indices: {e}")
             return None
     
     def get_current_market_summary(self):
@@ -34,7 +36,7 @@ class Scraper:
                 logger.warning("No data found for current market summary.")
                 return None
         except Exception as e:
-            logger.error(f"Error fetching current market summary: {e}")
+            logger.error(f"Error scraping current market summary: {e}")
             return None
     
     def get_sectorwise_market_summary(self):
@@ -47,7 +49,7 @@ class Scraper:
                 logger.warning("No data found for sectorwise market summary.")
                 return None
         except Exception as e:
-            logger.error(f"Error fetching sectorwise market summary: {e}")
+            logger.error(f"Error scraping sectorwise market summary: {e}")
             return None
 
     def get_datewise_market_indices(self, date: str):
@@ -61,7 +63,7 @@ class Scraper:
                 logger.warning("No data found for datewise market indices.")
                 return None
         except Exception as e:
-            logger.error(f"Error fetching datewise market indices: {e}")
+            logger.error(f"Error scraping datewise market indices: {e}")
             return None
 
     def get_datewise_sectorwise_summary(self, date: str):
@@ -75,5 +77,37 @@ class Scraper:
                 logger.warning("No data found for datewise sectorwise summary.")
                 return None
         except Exception as e:
-            logger.error(f"Error fetching datewise sectorwise summary: {e}")
+            logger.error(f"Error scraping datewise sectorwise summary: {e}")
+            return None
+
+    def get_historical_indices_data(self,indices_name, date_from, date_to):
+        """Scraper method to get the historical indices data"""
+        try:
+            historical_indices_data = HistoricalIndicesData()
+            df = historical_indices_data.get_indices_historical_data(indices_name, date_from, date_to)
+            if not df.empty:
+                df.to_csv(f"/generatedCSV/{indices_name} historical data.csv")
+                return df
+            else:
+                logger.warning(f"No data found for {indices_name} historical data")
+                return None
+            
+        except Exception as e:
+            logger.error(f"Error scraping historical indices data: {e}")
+            return None
+
+    def get_historical_chart_data(self,indices_name, date_from, date_to):
+        """Scraper method to get the historical chart data"""
+        try:
+            historical_indices_data = HistoricalChartData()
+            df = historical_indices_data.get_chart_historical_data(indices_name, date_from, date_to)
+            if not df.empty:
+                df.to_csv(f"./{indices_name} charting data.csv", index=False)
+                return df
+            else:
+                logger.warning(f"No data found for {indices_name} historical data")
+                return None
+            
+        except Exception as e:
+            logger.error(f"Error scraping historical indices data: {e}")
             return None
