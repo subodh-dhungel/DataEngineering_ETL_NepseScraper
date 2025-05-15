@@ -1,5 +1,4 @@
 import pandas as pd
-from ShareSansarScraper import database_helper
 from ShareSansarScraper.database_helper import DatabaseHelper
 from ShareSansarScraper.historicaldata.historical_indices_data import HistoricalIndicesData
 from datetime import datetime
@@ -115,4 +114,8 @@ class DataLoader:
         """
         
         self.db_helper.insert_data(insert_query, df.reset_index().values.tolist())
+    
+        self.db_helper.close()
         
+    def load_companies_data():
+        pass

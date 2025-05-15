@@ -1,0 +1,6 @@
+selenium~=4.29           # Browser automation
+pandas>=2.2.0         # Data manipulation
+psycopg2-binary == 2.9.10   # PostgreSQL driver (binary build, avoids pg_config issues)
+apache-airflow == 3.0.0      # Workflow orchestration
+apache-airflow-providers-postgres~= 6.1.0 # PostgreSQL provider for Airflow
+python-dotenv == 1.1.0            # Environment variable loading
