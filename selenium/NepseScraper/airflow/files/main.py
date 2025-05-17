@@ -1,7 +1,7 @@
 from ShareSansarScraper.historicaldata.historical_charting_data import HistoricalChartData
 from ShareSansarScraper.scraper import Scraper
 from ShareSansarScraper.data_loader import DataLoader
-from ShareSansarScraper.scraper import Scraper
+
 
 def main():
     scraper = Scraper()

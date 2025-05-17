@@ -5,7 +5,7 @@ import subprocess
 import pendulum
 
 def run_main_script():
-    subprocess.run(["python3", "/home/subodh/workingDirectory/internship/selenium/NepseScraper/main.py"], check=True)
+    subprocess.run(["python3", "/opt/airflow/dags/main.py"], check=True)
 
 default_args = {
     'owner': 'airflow',
